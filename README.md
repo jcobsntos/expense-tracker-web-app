@@ -8,6 +8,13 @@ Built with ❤️ by **[@jcobsntos](https://github.com/jcobsntos)**
 ![GitHub stars](https://img.shields.io/github/stars/jcobsntos/expense-tracker-web-app?style=social)
 ![GitHub license](https://img.shields.io/github/license/jcobsntos/expense-tracker-web-app)
 
+![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)
+![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white)
+
 ---
 
 ## 🎥 Demo Preview (GIF)
@@ -30,6 +37,19 @@ Built with ❤️ by **[@jcobsntos](https://github.com/jcobsntos)**
 | **JWT (JSON Web Tokens)** | Authentication & Authorization |
 | **Recharts** | Data visualization (graphs & charts) |
 | **Axios** | API communication |
+
+---
+## 🚀 Features
+- 🔐 **User Authentication** – Secure login & sign-up with JWT  
+- 📊 **Dashboard Overview** – Total balance, income & expense summary  
+- 💵 **Income Management** – Add, view, delete, and export income sources  
+- 💸 **Expense Management** – Track expenses by category, delete, and export  
+- 📈 **Interactive Charts** – Bar, Pie, and Line charts for financial insights  
+- 🕒 **Recent Transactions** – Quick access to the latest records  
+- 📑 **Excel Reports** – Export all income & expense data  
+- 📱 **Responsive Design** – Works across desktop, tablet, and mobile  
+- 🧭 **Intuitive Navigation** – Sidebar access to Dashboard, Income, Expenses, and Logout  
+- ❌ **Delete with Ease** – Hover over items to reveal a delete button  
 
 ---
 
@@ -59,9 +79,15 @@ expense-tracker-web-app/
 
 ## 📸 Screenshots
 
-Add your app’s screenshots here (e.g., dashboard, login, charts).
+Here are some previews of the app in action:  
 
-![Screenshot Placeholder](https://via.placeholder.com/800x400?text=App+Screenshot)
+| Login Page | Dashboard |
+|------------|-----------|
+| ![Login](assets/login.png) | ![Dashboard](assets/dashboard.png) |
+
+| Income Page | Expense Page |
+|-------------|--------------|
+| ![Income](assets/income.png) | ![Expense](assets/expenses.png) |
 
 ---
 
@@ -69,10 +95,12 @@ Add your app’s screenshots here (e.g., dashboard, login, charts).
 
 ```mermaid
 flowchart TD
-    A[Frontend - React] -->|API Calls| B[Backend - Express]
+    User[User] -->|HTTP Requests|  
+    A[Frontend - React + Tailwind] -->|API Calls| B[Backend - Express + + Node.js]
     B --> C[MongoDB Database]
     B --> D[Authentication via JWT]
-    A --> E[Charts & UI - Recharts]
+    B --> E[Excel Export + Multer]
+    A --> F[Charts & UI - Recharts]
 ```
 
 ---
@@ -84,13 +112,35 @@ flowchart TD
 git clone https://github.com/jcobsntos/expense-tracker-web-app.git
 cd expense-tracker-web-app
 ```
-
-### 2️⃣ Install Dependencies
+### 2️⃣ Node version
+Make sure you’re using the correct Node version:
+```bash
+nvm use node
+```
+### 3️⃣ Install Dependencies
 For backend:
 ```bash
 cd backend
-npm install
+npm install express jsonwebtoken mongoose dotenv cors bcryptjs multer xlsx
+
 ```
+### 🔑 Generate JWT Secret
+```bash
+node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
+```
+Create .env file inside backend/
+```bash
+MONGO_URI=mongodb+srv://{username}:<db_password>@expensetracker.mongodb.net/?retryWrites=true&w=majority&appName={clusterName}
+JWT_SECRET={generatedToken}
+PORT=8000
+```
+### MongoDB Setup
+
+1. Create/sign in to a MongoDB Atlas account
+
+2. Create a cluster and get the connection string
+
+3. Replace <db_password> in your .env file
 
 For frontend:
 ```bash
@@ -98,17 +148,11 @@ cd frontend/expense-tracker
 npm install
 ```
 
-### 3️⃣ Run the App
-Backend:
+### 4️⃣ Run the App 
+Go back to root folder Expense-Tracker
 ```bash
 npm run dev
 ```
-
-Frontend:
-```bash
-npm run dev
-```
-
 ---
 
 ## 🤝 Contributing
