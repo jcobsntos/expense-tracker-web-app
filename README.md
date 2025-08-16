@@ -95,11 +95,11 @@ Here are some previews of the app in action:
 
 ```mermaid
 flowchart TD
-    User[User] -->|HTTP Requests|  
-    A[Frontend - React + Tailwind] -->|API Calls| B[Backend - Express + + Node.js]
+    User[User] -->|HTTP Requests| A[Frontend - React + Tailwind]
+    A -->|API Calls| B[Backend - Express + Node.js]
     B --> C[MongoDB Database]
     B --> D[Authentication via JWT]
-    B --> E[Excel Export + Multer]
+    B --> E[Excel Export - Multer + XLSX]
     A --> F[Charts & UI - Recharts]
 ```
 
@@ -142,14 +142,14 @@ PORT=8000
 
 3. Replace <db_password> in your .env file
 
-For frontend:
+### 4️⃣ For frontend
 ```bash
 cd frontend/expense-tracker
 npm install
 ```
 
-### 4️⃣ Run the App 
-Go back to root folder Expense-Tracker
+### 5️⃣ Run the App 
+Go back to root folder 
 ```bash
 npm run dev
 ```
