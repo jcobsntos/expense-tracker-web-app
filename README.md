@@ -23,7 +23,7 @@ Built with ❤️ by **[@jcobsntos](https://github.com/jcobsntos)**
 
 > Add a screen recording of your app in action here (e.g., `demo.gif` in the repo).
 
-![Demo GIF Placeholder](https://via.placeholder.com/800x400?text=Demo+GIF+Preview)
+![Demo GIF Placeholder](https://github.com/user-attachments/assets/48b57900-c5a9-4132-a23b-1f32713239c6)
 
 ---
 
@@ -86,13 +86,15 @@ expense-tracker-web-app/
 
 Here are some previews of the app in action:
 
-| Login Page                 | Dashboard                          |
-| -------------------------- | ---------------------------------- |
-| ![Login](assets/login.png) | ![Dashboard](assets/dashboard.png) |
+| Login Page                 | Sign Up Page                     | Dashboard                          |
+| -------------------------- | -------------------------------- | ---------------------------------- |
+| ![Login](https://github.com/user-attachments/assets/a15574e0-969e-480b-abab-358e0174f3a8) | ![SignUp](https://github.com/user-attachments/assets/ebb85b14-1491-47f1-afaa-a51b294c3a53) | ![Dashboard](https://github.com/user-attachments/assets/87b0f698-a8d5-438d-9490-a76b80ab686e) |
 
 | Income Page                  | Expense Page                    |
 | ---------------------------- | ------------------------------- |
-| ![Income](assets/income.png) | ![Expense](assets/expenses.png) |
+| ![Income](https://github.com/user-attachments/assets/dfd1cf3d-22d6-4f05-a586-ed598dc28477) | ![Expense](https://github.com/user-attachments/assets/d080e91f-b0bf-4bd2-9a6f-1abd2c8a01b3) |
+
+
 
 ---
 
