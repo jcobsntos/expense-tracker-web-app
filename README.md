@@ -21,8 +21,6 @@ Built with ❤️ by **[@jcobsntos](https://github.com/jcobsntos)**
 
 ## 🎥 Demo Preview (GIF)
 
-> Add a screen recording of your app in action here (e.g., `demo.gif` in the repo).
-
 ![Demo GIF Placeholder](https://github.com/user-attachments/assets/48b57900-c5a9-4132-a23b-1f32713239c6)
 
 ---
