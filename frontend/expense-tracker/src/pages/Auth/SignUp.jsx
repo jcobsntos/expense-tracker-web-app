@@ -1,14 +1,14 @@
 import React, { useState, useContext } from 'react';
+import { motion } from "framer-motion";
 import AuthLayout from '../../components/layouts/AuthLayout';
 import { useNavigate, Link } from 'react-router-dom';
 import Input from '../../components/Inputs/Input';
 import { validateEmail } from '../../utils/helper';
-import ProfilePhotoSelector from '../../components/Inputs/ProfilePhotoSelector'; // <-- import your selector
+import ProfilePhotoSelector from '../../components/Inputs/ProfilePhotoSelector';
 import axiosInstance from '../../utils/axiosInstance';
 import { API_PATHS } from '../../utils/apiPaths';
 import { UserContext } from '../../context/userContext';
-import  uploadImage  from '../../utils/uploadImage'; // <-- import the upload function
-
+import uploadImage from '../../utils/uploadImage';
 
 const SignUp = () => {
   const [profilePic, setProfilePic] = useState(null);
@@ -26,87 +26,94 @@ const SignUp = () => {
     return /^(?=.*[!@#$%^&*])(?=.{8,})/.test(password);
   }
 
-const handleSignUp = async (e) => {
-  e.preventDefault();
-  setError(null);
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+    setError(null);
 
-  let profileImageUrl="";
+    let profileImageUrl = "";
 
-  if (!firstName.trim()) {
-    setError("Please enter your first name.");
-    return;
-  }
-
-  if (!lastName.trim()) {
-    setError("Please enter your last name.");
-    return;
-  }
-
-  if (!validateEmail(email)) {
-    setError("Please enter a valid email address.");
-    return;
-  }
-
-  if (!validatePassword(password)) {
-    setError("Password must be at least 8 characters long and contain at least one special character.");
-    return;
-  }
-
-  if (password !== confirmPassword) {
-    setError("Passwords do not match.");
-    return;
-  }
+    if (!firstName.trim()) {
+      setError("Please enter your first name.");
+      return;
+    }
+    if (!lastName.trim()) {
+      setError("Please enter your last name.");
+      return;
+    }
+    if (!validateEmail(email)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+    if (!validatePassword(password)) {
+      setError("Password must be at least 8 characters long and contain at least one special character.");
+      return;
+    }
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
   
-  // Make the Sign Up API call
-  try {
-    //upload profile image if selected
-    if (profilePic) {
-      const imgUploadRes = await uploadImage(profilePic);
-      profileImageUrl = imgUploadRes.imageUrl || ""; // Assuming the response contains the image
+    try {
+      if (profilePic) {
+        const imgUploadRes = await uploadImage(profilePic);
+        profileImageUrl = imgUploadRes.imageUrl || "";
+      }
+      const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, {
+        firstName,
+        lastName,
+        email,
+        password,
+        profileImageUrl
+      });
+        
+      const { token, user } = response.data;
+      if (token) {
+        localStorage.setItem("token", token);
+        updateUser(user);
+        navigate("/dashboard");
+      }
+    } catch (err) {
+      if (err.response?.data?.message) {
+        setError(err.response.data.message);
+      } else {
+        setError("An unexpected error occurred. Please try again.");
+      }
     }
-    const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, {
-      firstName,
-      lastName,
-      email,
-      password,
-      profileImageUrl
-    });
-      
-    const { token, user } = response.data;
-
-    if (token) {
-      localStorage.setItem("token", token);
-      updateUser(user); // Update user context
-      navigate("/dashboard");
-    }
-  } catch (err) {
-    if (err.response && err.response.data.message) {
-      setError(err.response.data.message);
-    } else {
-      setError("An unexpected error occurred. Please try again.");
-    }
-  }
-};
+  };
 
   return (
     <AuthLayout>
-      <div className="lg:w-[100%] h-auto md:h-full mt-8 flex flex-col justify-center">
-        <h3 className="text-xl font-semibold text-black">Create an Account</h3>
-        <p className="text-xs text-slate-700 mt-1 mb-4">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="lg:w-[100%] h-auto md:h-full mt-8 flex flex-col justify-center"
+      >
+        <h3 className="text-2xl font-bold text-gray-800">Create an Account</h3>
+        <p className="text-sm text-slate-600 mt-1 mb-5">
           Join us and start tracking your expenses today!
         </p>
 
         {error && (
-          <p className="bg-red-100 text-red-700 px-3 py-1 rounded mb-3 text-sm">
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="bg-red-100 text-red-700 px-3 py-2 rounded-md mb-4 text-sm font-medium"
+          >
             {error}
-          </p>
+          </motion.p>
         )}
 
-        <form onSubmit={handleSignUp} className="space-y-3">
+        <form onSubmit={handleSignUp} className="space-y-4">
           {/* Profile Photo */}
-          <div className="flex justify-center">
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.1 }}
+            className="flex justify-center"
+          >
             <ProfilePhotoSelector image={profilePic} setImage={setProfilePic} />
-          </div>
+          </motion.div>
 
           {/* Name Fields */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -116,16 +123,15 @@ const handleSignUp = async (e) => {
               placeholder="First Name"
               label="First Name"
               type="text"
-              className="h-9 text-sm"
+              className="h-10 text-sm"
             />
-
             <Input
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
               placeholder="Last Name"
               label="Last Name"
               type="text"
-              className="h-9 text-sm"
+              className="h-10 text-sm"
             />
           </div>
 
@@ -136,7 +142,7 @@ const handleSignUp = async (e) => {
             placeholder="juandelacruz@example.com"
             label="Email Address"
             type="text"
-            className="h-9 text-sm"
+            className="h-10 text-sm"
           />
 
           {/* Password */}
@@ -145,7 +151,7 @@ const handleSignUp = async (e) => {
             onChange={(e) => setPassword(e.target.value)}
             label="Password"
             type="password"
-            className="h-9 text-sm"
+            className="h-10 text-sm"
           />
 
           {/* Confirm Password */}
@@ -154,25 +160,27 @@ const handleSignUp = async (e) => {
             onChange={(e) => setConfirmPassword(e.target.value)}
             label="Confirm Password"
             type="password"
-            className="h-9 text-sm"
+            className="h-10 text-sm"
           />
 
           {/* Submit */}
-          <button
+          <motion.button
+            whileTap={{ scale: 0.97 }}
+            whileHover={{ scale: 1.02 }}
             type="submit"
-            className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-1.5 px-4 rounded-lg text-sm transition duration-200"
+            className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded-lg text-sm transition duration-200 shadow-md"
           >
             Sign Up
-          </button>
+          </motion.button>
         </form>
 
-        <p className="text-xs text-gray-600 mt-3 text-center">
+        <p className="text-sm text-gray-600 mt-4 text-center">
           Already have an account?{" "}
-          <Link to="/login" className="text-purple-600 hover:underline">
+          <Link to="/login" className="text-purple-600 hover:underline font-medium">
             Login
           </Link>
         </p>
-      </div>
+      </motion.div>
     </AuthLayout>
   );
 };

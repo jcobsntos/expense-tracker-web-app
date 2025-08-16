@@ -6,6 +6,8 @@ import axiosInstance from '../../utils/axiosInstance';
 import { API_PATHS } from '../../utils/apiPaths';
 import { validateEmail } from '../../utils/helper';
 import { UserContext } from '../../context/userContext';
+import { motion } from 'framer-motion';
+import { FaExclamationCircle } from "react-icons/fa";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -21,65 +23,70 @@ const Login = () => {
   };
 
   const handleLogin = async (e) => {
-  e.preventDefault();
-  setError(null);
+    e.preventDefault();
+    setError(null);
 
-  if (!validateEmail(email)) {
-    setError("Please enter a valid email address.");
-    return;
-  }
-
-  if (!validatePassword(password)) {
-    setError("Password must be at least 8 characters long and contain at least one special character.");
-    return;
-  }
-
-  // * (optional) If you keep confirmPassword in Login:
-  if (password !== confirmPassword) {
-    setError("Passwords do not match.");
-    return;
-  }
-
-  // TODO: Make the Login API call
-
-  setError(null);
-  try {
-    const { data } = await axiosInstance.post(API_PATHS.AUTH.LOGIN, { email, password });
-    const { token, user } = data;
-
-    if (token) {
-      localStorage.setItem("token", token);
-      // updateUser(user); // if you have this
-      navigate("/dashboard");
-    } else {
-      setError("Login failed: token not received.");
+    if (!validateEmail(email)) {
+      setError("Please enter a valid email address.");
+      return;
     }
-  } catch (err) {
-    // You’ll see the failed request in Network > Fetch/XHR (status 401)
-    if (err.response?.status === 401) {
-      setError("Invalid email or password.");
-    } else if (err.response?.data?.message) {
-      setError(err.response.data.message);
-    } else if (err.request) {
-      setError("No response from server. Please check your network connection.");
-    } else {
-      setError("An unexpected error occurred. Please try again.");
+
+    if (!validatePassword(password)) {
+      setError("Password must be at least 8 characters long and contain at least one special character.");
+      return;
     }
-  }
-};
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
+    try {
+      const { data } = await axiosInstance.post(API_PATHS.AUTH.LOGIN, { email, password });
+      const { token, user } = data;
+
+      if (token) {
+        localStorage.setItem("token", token);
+        // updateUser(user);
+        navigate("/dashboard");
+      } else {
+        setError("Login failed: token not received.");
+      }
+    } catch (err) {
+      if (err.response?.status === 401) {
+        setError("Invalid email or password.");
+      } else if (err.response?.data?.message) {
+        setError(err.response.data.message);
+      } else if (err.request) {
+        setError("No response from server. Please check your network connection.");
+      } else {
+        setError("An unexpected error occurred. Please try again.");
+      }
+    }
+  };
 
   return (
     <AuthLayout>
-      <div className="lg:w-[70%] h-3/4 md:h-full flex flex-col justify-center">
-        <h3 className="text-xl font-semibold text-black">Welcome Back</h3>
-        <p className="text-xs text-slate-700 mt-[5px] mb-6">
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="lg:w-[70%] h-3/4 md:h-full flex flex-col justify-center"
+      >
+        <h3 className="text-2xl font-bold text-gray-900">Welcome Back 👋</h3>
+        <p className="text-sm text-gray-600 mt-2 mb-6">
           Please enter your details to log in
         </p>
 
         {error && (
-          <p className="bg-red-100 text-red-700 px-4 py-2 rounded mb-4 text-sm">
-            {error}
-          </p>
+          <motion.div 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            className="flex items-center gap-2 bg-red-100 text-red-700 px-4 py-2 rounded-lg mb-4 text-sm border border-red-300"
+          >
+            <FaExclamationCircle />
+            <span>{error}</span>
+          </motion.div>
         )}
 
         <form onSubmit={handleLogin} className="space-y-4">
@@ -94,32 +101,32 @@ const Login = () => {
             value={password}
             onChange={({ target }) => setPassword(target.value)}
             label="Enter Password"
-            placeholder=""
             type="password"
           />
           <Input
             value={confirmPassword}
             onChange={({ target }) => setConfirmPassword(target.value)}
             label="Confirm Password"
-            placeholder=""
             type="password"
           />
 
-          <button
+          <motion.button
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
             type="submit"
-            className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200"
+            className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-semibold py-3 px-4 rounded-xl shadow-lg transition-all"
           >
             Login
-          </button>
+          </motion.button>
         </form>
 
-        <p className="text-sm text-gray-600 mt-4 text-center">
+        <p className="text-sm text-gray-600 mt-6 text-center">
           Don’t have an account?{" "}
-          <Link to="/signup" className="text-purple-600 hover:underline">
+          <Link to="/signup" className="text-indigo-600 font-medium hover:underline">
             Sign up
           </Link>
         </p>
-      </div>
+      </motion.div>
     </AuthLayout>
   );
 };

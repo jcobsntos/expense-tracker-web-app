@@ -1,5 +1,5 @@
 import React from 'react'
-import YOR from "../../assets/images/yor (2).jpg";
+import CHART from "../../assets/images/chart.jpg";
 import { LuTrendingUpDown } from "react-icons/lu";
 
 const AuthLayout = ({children}) => {
@@ -25,7 +25,7 @@ const AuthLayout = ({children}) => {
         </div>
 
         <img
-            src={YOR}
+            src={CHART}
             className="w-64 lg:w-[90%] absolute bottom-10 shadow-lg shadow-blue-400/15"
          />
         </div>

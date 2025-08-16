@@ -15,10 +15,19 @@ const UserProvider = ({ children }) => {
         setLoading(false);
     }, []);
 
-    // Update user and store in localStorage
+    // Update full user and store in localStorage
     const updateUser = (userData) => {
         setUser(userData);
         localStorage.setItem("user", JSON.stringify(userData));
+    };
+
+    // ✅ Update only the avatar
+    const updateUserAvatar = (newAvatar) => {
+        setUser((prevUser) => {
+            const updatedUser = { ...prevUser, profileImageUrl: newAvatar };
+            localStorage.setItem("user", JSON.stringify(updatedUser));
+            return updatedUser;
+        });
     };
 
     // Clear user and remove from localStorage
@@ -29,7 +38,7 @@ const UserProvider = ({ children }) => {
 
     return (
         <UserContext.Provider 
-            value={{ user, updateUser, clearUser, loading }}
+            value={{ user, updateUser, updateUserAvatar, clearUser, loading }}
         >
             {!loading && children}
         </UserContext.Provider>
