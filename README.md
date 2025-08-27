@@ -1,7 +1,7 @@
 # 💰 Expense Tracker Web App
 
 A full-stack **MERN (MongoDB, Express, React, Node.js)** based Expense Tracker that helps users manage income, expenses, and budgets with an intuitive dashboard.  
-Built with ❤️ by **[@jcobsntos](https://github.com/jcobsntos)**
+Built by **[@jcobsntos](https://github.com/jcobsntos)**
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/jcobsntos/expense-tracker-web-app)
 ![GitHub stars](https://img.shields.io/github/stars/jcobsntos/expense-tracker-web-app?style=social)
@@ -214,4 +214,4 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ---
 
-Built with ❤️ by [@jcobsntos](https://github.com/jcobsntos)
+Built by [@jcobsntos](https://github.com/jcobsntos)
