@@ -24,13 +24,16 @@ exports.registerUser = async (req, res) => {
         }
 
         // create new user
-        const user = await User.create({
+        const createdUser = await User.create({
             firstName,
             lastName,
             email,
             password,
             profileImageUrl
         });
+
+        // fetch sanitized user without password
+        const user = await User.findById(createdUser._id).select('-password');
 
         res.status(201).json({
             _id: user._id,
@@ -52,11 +55,12 @@ exports.loginUser = async (req, res) => {
     }
     try {
         // check if user exists
-        const user = await User.findOne({ email });
-        if (!user || !(await user.comparePassword(password))) {
+        const userWithPassword = await User.findOne({ email });
+        if (!userWithPassword || !(await userWithPassword.comparePassword(password))) {
             return res.status(401).json({ message: 'Invalid email or password' });
         }   
 
+        const user = await User.findById(userWithPassword._id).select('-password');
         res.status(200).json({
             _id: user._id,
             user,

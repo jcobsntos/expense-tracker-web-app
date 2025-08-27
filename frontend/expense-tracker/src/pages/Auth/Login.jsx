@@ -47,7 +47,7 @@ const Login = () => {
 
       if (token) {
         localStorage.setItem("token", token);
-        // updateUser(user);
+        updateUser(user);
         navigate("/dashboard");
       } else {
         setError("Login failed: token not received.");
