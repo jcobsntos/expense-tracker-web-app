@@ -80,3 +80,27 @@ exports.getUserInfo = async (req, res) => {
         res.status(500).json({ message: 'Error Fetching User Info', error: error.message });
     }
 };
+
+// update profile image URL
+exports.updateProfileImage = async (req, res) => {
+    try {
+        const { profileImageUrl } = req.body;
+        if (!profileImageUrl) {
+            return res.status(400).json({ message: 'profileImageUrl is required' });
+        }
+
+        const updatedUser = await User.findByIdAndUpdate(
+            req.user._id,
+            { profileImageUrl },
+            { new: true }
+        ).select('-password');
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        return res.status(200).json(updatedUser);
+    } catch (error) {
+        return res.status(500).json({ message: 'Error Updating Profile Image', error: error.message });
+    }
+};

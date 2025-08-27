@@ -3,6 +3,9 @@ import { SIDE_MENU_DATA } from '../../utils/data'
 import { UserContext } from '../../context/userContext'
 import { useNavigate } from 'react-router-dom';
 import CharAvatar from '../Cards/CharAvatar';
+import uploadImage from '../../utils/uploadImage';
+import axiosInstance from '../../utils/axiosInstance';
+import { API_PATHS } from '../../utils/apiPaths';
 
 const SideMenu = ({ activeMenu }) => {
   const { user, clearUser, updateUserAvatar } = useContext(UserContext); 
@@ -23,15 +26,21 @@ const SideMenu = ({ activeMenu }) => {
     navigate("/login");
   };
 
-  const handleAvatarChange = (event) => {
+  const handleAvatarChange = async (event) => {
     const file = event.target.files[0];
-    if (file) {
-      // here you can call API to upload avatar OR store it in context
-      const reader = new FileReader();
-      reader.onload = () => {
-        updateUserAvatar(reader.result); // update in UserContext
-      };
-      reader.readAsDataURL(file);
+    if (!file) return;
+    try {
+      const uploadRes = await uploadImage(file);
+      const imageUrl = uploadRes?.imageUrl;
+      if (!imageUrl) return;
+      const { data: updatedUser } = await axiosInstance.put(
+        API_PATHS.AUTH.UPDATE_PROFILE_IMAGE,
+        { profileImageUrl: imageUrl }
+      );
+      // Persist full user
+      updateUser(updatedUser);
+    } catch (err) {
+      console.error('Failed to update profile image', err);
     }
   };
 

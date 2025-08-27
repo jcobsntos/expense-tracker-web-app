@@ -1,6 +1,6 @@
 const express = require('express');
 const { protect } = require('../middleware/authMiddleware');
-const { registerUser, loginUser, getUserInfo } = require('../controllers/authController');
+const { registerUser, loginUser, getUserInfo, updateProfileImage } = require('../controllers/authController');
 const upload = require('../middleware/uploadMiddleware');
 const router = express.Router();
 
@@ -19,3 +19,5 @@ router.post('/upload-image', upload.single("image"), (req, res) => {
 });
 
 module.exports = router;
+// update profile image
+router.put('/profile-image', protect, updateProfileImage);
