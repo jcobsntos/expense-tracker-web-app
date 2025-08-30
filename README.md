@@ -44,15 +44,20 @@ Built by **[@jcobsntos](https://github.com/jcobsntos)**
 ## 🚀 Features
 
 - 🔐 **User Authentication** – Secure login & sign-up with JWT
-- 📊 **Dashboard Overview** – Total balance, income & expense summary
+- 📁 **Dashboard Overview** – Total balance, income & expense summary
 - 💵 **Income Management** – Add, view, delete, and export income sources
 - 💸 **Expense Management** – Track expenses by category, delete, and export
-- 📈 **Interactive Charts** – Bar, Pie, and Line charts for financial insights
+- 📈 **Interactive Charts** – Bar, Pie, Line, and Area charts with multiple visualization options
 - 🕒 **Recent Transactions** – Quick access to the latest records
-- 📑 **Excel Reports** – Export all income & expense data
+- 📁 **Excel Reports** – Export all income & expense data
 - 📱 **Responsive Design** – Works across desktop, tablet, and mobile
-- 🧭 **Intuitive Navigation** – Sidebar access to Dashboard, Income, Expenses, and Logout
+- 🧭 **Intuitive Navigation** – Sidebar access to Dashboard, Income, Expenses, Budget, Profile, and Logout
 - ❌ **Delete with Ease** – Hover over items to reveal a delete button
+- 🌙 **Dark Mode** – Beautiful dark theme with system preference detection
+- 👤 **Profile Management** – Complete profile settings with image upload/remove
+- 💰 **Budget Tracking** – Set monthly budgets by category and track spending
+- 🎨 **Enhanced Visualizations** – Interactive charts with hover effects and multiple chart types
+- 📊 **Spending Insights** – Advanced analytics with trend analysis
 
 ---
 
@@ -100,12 +105,16 @@ Here are some previews of the app in action:
 
 ```mermaid
 flowchart TD
-    User[User] -->|HTTP Requests| A[Frontend - React + Tailwind]
+    User[User] -->|HTTP Requests| A[Frontend - React + Tailwind + Dark Mode]
     A -->|API Calls| B[Backend - Express + Node.js]
     B --> C[MongoDB Database]
     B --> D[Authentication via JWT]
-    B --> E[Excel Export - Multer + XLSX]
-    A --> F[Charts & UI - Recharts]
+    B --> E[Image Upload - Multer]
+    B --> F[Excel Export - XLSX]
+    B --> G[Budget Management]
+    A --> H[Enhanced Charts - Recharts]
+    A --> I[Profile Management]
+    A --> J[Theme Context]
 ```
 
 ---
@@ -190,11 +199,21 @@ Contributions are welcome!
 
 ## 🛣 Roadmap
 
+### ✅ Recently Completed
+- [x] **Dark Mode Implementation** – Complete dark theme with system detection
+- [x] **Profile Management** – Comprehensive profile settings with image management
+- [x] **Budget Tracking** – Monthly budget creation and monitoring by category
+- [x] **Enhanced Data Visualization** – Interactive charts with multiple view options
+- [x] **Improved UX** – Better navigation, animations, and user feedback
+
+### 🚀 Upcoming Features
 - [ ] Add recurring expenses feature
-- [ ] Implement dark mode
-- [ ] Mobile responsive improvements
+- [ ] Enhanced export functionality with date range filters
+- [ ] Mobile app development (React Native)
 - [ ] Multi-user support with role management
-- [ ] Export reports as PDF/CSV
+- [ ] Advanced analytics and spending predictions
+- [ ] Receipt scanning with OCR
+- [ ] Integration with banking APIs
 
 ---
 

@@ -108,3 +108,84 @@ exports.updateProfileImage = async (req, res) => {
         return res.status(500).json({ message: 'Error Updating Profile Image', error: error.message });
     }
 };
+
+// remove profile image
+exports.removeProfileImage = async (req, res) => {
+    try {
+        const updatedUser = await User.findByIdAndUpdate(
+            req.user._id,
+            { profileImageUrl: "" },
+            { new: true }
+        ).select('-password');
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        return res.status(200).json(updatedUser);
+    } catch (error) {
+        return res.status(500).json({ message: 'Error Removing Profile Image', error: error.message });
+    }
+};
+
+// update profile info (name, email)
+exports.updateProfile = async (req, res) => {
+    try {
+        const { firstName, lastName, email } = req.body;
+        
+        if (!firstName || !lastName || !email) {
+            return res.status(400).json({ message: 'First name, last name, and email are required' });
+        }
+
+        // Check if email already exists for another user
+        const existingUser = await User.findOne({ email, _id: { $ne: req.user._id } });
+        if (existingUser) {
+            return res.status(400).json({ message: 'Email already in use by another account' });
+        }
+
+        const updatedUser = await User.findByIdAndUpdate(
+            req.user._id,
+            { firstName, lastName, email },
+            { new: true }
+        ).select('-password');
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        return res.status(200).json(updatedUser);
+    } catch (error) {
+        return res.status(500).json({ message: 'Error Updating Profile', error: error.message });
+    }
+};
+
+// update password
+exports.updatePassword = async (req, res) => {
+    try {
+        const { currentPassword, newPassword } = req.body;
+        
+        if (!currentPassword || !newPassword) {
+            return res.status(400).json({ message: 'Current password and new password are required' });
+        }
+
+        // Get user with password for verification
+        const user = await User.findById(req.user._id);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Verify current password
+        const isCurrentPasswordValid = await user.comparePassword(currentPassword);
+        if (!isCurrentPasswordValid) {
+            return res.status(400).json({ message: 'Current password is incorrect' });
+        }
+
+        // Update password
+        user.password = newPassword;
+        await user.save();
+
+        return res.status(200).json({ message: 'Password updated successfully' });
+    } catch (error) {
+        return res.status(500).json({ message: 'Error Updating Password', error: error.message });
+    }
+};

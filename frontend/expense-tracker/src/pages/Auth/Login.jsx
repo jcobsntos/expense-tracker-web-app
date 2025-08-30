@@ -12,7 +12,6 @@ import { FaExclamationCircle } from "react-icons/fa";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState(null);
 
   const { updateUser } = useContext(UserContext);
@@ -36,10 +35,6 @@ const Login = () => {
       return;
     }
 
-    if (password !== confirmPassword) {
-      setError("Passwords do not match.");
-      return;
-    }
 
     try {
       const { data } = await axiosInstance.post(API_PATHS.AUTH.LOGIN, { email, password });
@@ -73,8 +68,8 @@ const Login = () => {
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="lg:w-[70%] h-3/4 md:h-full flex flex-col justify-center"
       >
-        <h3 className="text-2xl font-bold text-gray-900">Welcome Back 👋</h3>
-        <p className="text-sm text-gray-600 mt-2 mb-6">
+        <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Welcome Back 👋</h3>
+        <p className="text-sm text-gray-600 dark:text-gray-300 mt-2 mb-6">
           Please enter your details to log in
         </p>
 
@@ -82,7 +77,7 @@ const Login = () => {
           <motion.div 
             initial={{ opacity: 0 }} 
             animate={{ opacity: 1 }} 
-            className="flex items-center gap-2 bg-red-100 text-red-700 px-4 py-2 rounded-lg mb-4 text-sm border border-red-300"
+            className="flex items-center gap-2 bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-400 px-4 py-2 rounded-lg mb-4 text-sm border border-red-300 dark:border-red-800"
           >
             <FaExclamationCircle />
             <span>{error}</span>
@@ -103,12 +98,6 @@ const Login = () => {
             label="Enter Password"
             type="password"
           />
-          <Input
-            value={confirmPassword}
-            onChange={({ target }) => setConfirmPassword(target.value)}
-            label="Confirm Password"
-            type="password"
-          />
 
           <motion.button
             whileHover={{ scale: 1.03 }}
@@ -120,9 +109,9 @@ const Login = () => {
           </motion.button>
         </form>
 
-        <p className="text-sm text-gray-600 mt-6 text-center">
-          Don’t have an account?{" "}
-          <Link to="/signup" className="text-indigo-600 font-medium hover:underline">
+        <p className="text-sm text-gray-600 dark:text-gray-300 mt-6 text-center">
+          Don't have an account?{" "}
+          <Link to="/signup" className="text-indigo-600 dark:text-indigo-400 font-medium hover:underline">
             Sign up
           </Link>
         </p>
