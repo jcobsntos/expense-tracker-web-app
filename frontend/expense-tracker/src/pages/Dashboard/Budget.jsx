@@ -124,11 +124,11 @@ const Budget = () => {
 
   const getStatusColor = (status) => {
     switch (status) {
-      case 'good': return 'text-green-600 bg-green-100 dark:text-green-400 dark:bg-green-900/20';
-      case 'moderate': return 'text-yellow-600 bg-yellow-100 dark:text-yellow-400 dark:bg-yellow-900/20';
-      case 'warning': return 'text-orange-600 bg-orange-100 dark:text-orange-400 dark:bg-orange-900/20';
-      case 'exceeded': return 'text-red-600 bg-red-100 dark:text-red-400 dark:bg-red-900/20';
-      default: return 'text-gray-600 bg-gray-100 dark:text-gray-400 dark:bg-gray-900/20';
+      case 'good': return 'text-green-600 bg-green-100';
+      case 'moderate': return 'text-yellow-600 bg-yellow-100';
+      case 'warning': return 'text-orange-600 bg-orange-100';
+      case 'exceeded': return 'text-red-600 bg-red-100';
+      default: return 'text-gray-600 bg-gray-100';
     }
   };
 
@@ -147,8 +147,8 @@ const Budget = () => {
       <div className="p-6">
         <div className="flex justify-between items-center mb-6">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Budget Management</h1>
-            <p className="text-gray-600 dark:text-gray-400">
+            <h1 className="text-2xl font-bold text-gray-900">Budget Management</h1>
+            <p className="text-gray-600">
               Track and manage your monthly budgets by category
             </p>
           </div>
@@ -167,7 +167,7 @@ const Budget = () => {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="bg-red-100 dark:bg-red-900/20 border border-red-300 dark:border-red-800 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg mb-6"
+            className="bg-red-100 border border-red-300 text-red-700 px-4 py-3 rounded-lg mb-6"
           >
             {error}
           </motion.div>
@@ -184,10 +184,10 @@ const Budget = () => {
             className="text-center py-12"
           >
             <FaChartLine className="mx-auto text-6xl text-gray-400 mb-4" />
-            <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">
+            <h3 className="text-xl font-semibold text-gray-700 mb-2">
               No Budgets Set
             </h3>
-            <p className="text-gray-500 dark:text-gray-400 mb-6">
+            <p className="text-gray-500 mb-6">
               Create your first budget to start tracking your spending
             </p>
             <button
@@ -204,27 +204,27 @@ const Budget = () => {
                 key={budget._id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 transition-all duration-200"
+                className="bg-white rounded-xl shadow-lg p-6"
               >
                 <div className="flex justify-between items-start mb-4">
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                    <h3 className="text-lg font-semibold text-gray-900">
                       {budget.category}
                     </h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                    <p className="text-sm text-gray-500">
                       {months.find(m => m.value === budget.month)?.label} {budget.year}
                     </p>
                   </div>
                   <div className="flex gap-2">
                     <button
                       onClick={() => handleEdit(budget)}
-                      className="text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
+                      className="text-gray-500 hover:text-blue-600 transition-colors"
                     >
                       <FaEdit />
                     </button>
                     <button
                       onClick={() => handleDelete(budget._id)}
-                      className="text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-400 transition-colors"
+                      className="text-gray-500 hover:text-red-600 transition-colors"
                     >
                       <FaTrash />
                     </button>
@@ -233,22 +233,22 @@ const Budget = () => {
 
                 <div className="mb-4">
                   <div className="flex justify-between text-sm mb-2">
-                    <span className="text-gray-600 dark:text-gray-400">Spent</span>
-                    <span className="text-gray-600 dark:text-gray-400">
+                    <span className="text-gray-600">Spent</span>
+                    <span className="text-gray-600">
                       ₱{budget.spentAmount.toLocaleString()} / ₱{budget.budgetAmount.toLocaleString()}
                     </span>
                   </div>
-                  <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                  <div className="w-full bg-gray-200 rounded-full h-2">
                     <div
                       className={`${getProgressColor(budget.status)} h-2 rounded-full transition-all`}
                       style={{ width: `${Math.min(100, budget.utilizationPercentage)}%` }}
                     ></div>
                   </div>
                   <div className="flex justify-between text-xs mt-1">
-                    <span className="text-gray-500 dark:text-gray-400">
+                    <span className="text-gray-500">
                       {budget.utilizationPercentage.toFixed(1)}% used
                     </span>
-                    <span className="text-gray-500 dark:text-gray-400">
+                    <span className="text-gray-500">
                       ₱{budget.remainingAmount.toLocaleString()} left
                     </span>
                   </div>
@@ -269,20 +269,20 @@ const Budget = () => {
         {/* Budget Modal */}
         <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
           <div className="p-6">
-            <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+            <h2 className="text-xl font-bold text-gray-900 mb-4">
               {editingBudget ? 'Edit Budget' : 'Add New Budget'}
             </h2>
             
             <form onSubmit={handleSubmit} className="space-y-4">
               {!editingBudget && (
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Category
                   </label>
                   <select
                     value={formData.category}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                    className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    className="w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                     required
                   >
                     <option value="">Select Category</option>
@@ -307,13 +307,13 @@ const Budget = () => {
               {!editingBudget && (
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
                       Month
                     </label>
                     <select
                       value={formData.month}
                       onChange={(e) => setFormData({ ...formData, month: parseInt(e.target.value) })}
-                      className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      className="w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                       required
                     >
                       {months.map((month) => (
@@ -339,7 +339,7 @@ const Budget = () => {
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="flex-1 py-2 px-4 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                  className="flex-1 py-2 px-4 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
                 >
                   Cancel
                 </button>

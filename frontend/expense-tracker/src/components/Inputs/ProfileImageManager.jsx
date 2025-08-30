@@ -13,10 +13,10 @@ const ProfileImageManager = ({ size = "w-20 h-20", showButtons = true, className
   const [isUploading, setIsUploading] = useState(false);
   const [isRemoving, setIsRemoving] = useState(false);
 
-  // Add timestamp to image URL to prevent caching issues
+  // Get image URL without cache-busting to prevent unnecessary reloads
   const getImageUrl = (url) => {
     if (!url) return null;
-    return `${url}?t=${Date.now()}`;
+    return url;
   };
 
   const handleImageUpload = async (event) => {
@@ -39,8 +39,8 @@ const ProfileImageManager = ({ size = "w-20 h-20", showButtons = true, className
         { profileImageUrl: imageUrl }
       );
 
-      // Update context with cache-busting URL
-      updateUserAvatar(getImageUrl(updatedUser.profileImageUrl));
+      // Update context with new image URL
+      updateUserAvatar(updatedUser.profileImageUrl);
       
     } catch (err) {
       console.error('Failed to update profile image', err);
