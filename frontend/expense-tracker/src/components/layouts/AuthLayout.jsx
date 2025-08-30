@@ -4,9 +4,9 @@ import { LuTrendingUpDown } from "react-icons/lu";
 
 const AuthLayout = ({children}) => {
 
-  return <div className="flex transition-colors duration-200">
-    <div className="w-screen h-screen md:w-[60vw] px-12 pt-8 pb-12 bg-white dark:bg-gray-900 transition-colors duration-200">
-        <h2 className="text-lg font-medium text-black dark:text-white transition-colors duration-200">Expense Tracker</h2>
+  return <div className="flex">
+    <div className="w-screen h-screen md:w-[60vw] px-12 pt-8 pb-12 bg-white">
+        <h2 className="text-lg font-medium text-black">Expense Tracker</h2>
         {children}
      </div>
 
@@ -36,13 +36,13 @@ const AuthLayout = ({children}) => {
 export default AuthLayout;
 
 const StatsInfoCard = ({ icon, label, value, color }) => {
-    return <div className="flex gap-6 bg-white dark:bg-gray-800 p-4 rounded-lx shadow-md shadow--purple-400/10 border border-gray-200/50 dark:border-gray-700/50 z-10 transition-colors duration-200">
+    return <div className="flex gap-6 bg-white p-4 rounded-lx shadow-md shadow--purple-400/10 border border-gray-200/50 z-10">
         <div className={`w-12 h-12 flex items-center justify-center text-[26px] text-white ${color} rounded-full drop-shadow-xl`}>
             {icon}
         </div>
         <div>
-            <h6 className="text-xs text-gray-500 dark:text-gray-400 mb-1">{label}</h6>
-            <span className="text-[20px] text-black dark:text-white">₱{value}</span>
+            <h6 className="text-xs text-gray-500 mb-1">{label}</h6>
+            <span className="text-[20px] text-black">₱{value}</span>
         </div>
     </div>
 };

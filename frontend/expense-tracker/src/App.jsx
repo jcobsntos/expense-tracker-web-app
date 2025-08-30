@@ -15,38 +15,35 @@ import Expense from "./pages/Dashboard/Expense";
 import Budget from "./pages/Dashboard/Budget";
 import Profile from "./pages/Dashboard/Profile";
 import UserProvider from './context/userContext';
-import ThemeProvider from './context/themeContext';
 import { Toaster } from "react-hot-toast";
 
 const App = () => {
   return (
-    <ThemeProvider>
-      <UserProvider>
-        <div>
-          <Router>
-            <Routes>
-              <Route path="/" element={<Root />} />
-              <Route path="/login" exact element={<Login />} />
-              <Route path="/signup" exact element={<SignUp />} />
+    <UserProvider>
+      <div>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Root />} />
+            <Route path="/login" exact element={<Login />} />
+            <Route path="/signup" exact element={<SignUp />} />
             <Route path="/dashboard" exact element={<Home />} />
             <Route path="/income" exact element={<Income />} />
             <Route path="/expense" exact element={<Expense />} />
             <Route path="/budget" exact element={<Budget />} />
             <Route path="/profile" exact element={<Profile />} />
-            </Routes>
-          </Router>
-        </div>
+          </Routes>
+        </Router>
+      </div>
 
-            <Toaster
-              toastOptions={{
-                className: "",
-                style: {
-                  fontSize:'13px'
-                },
-              }}
-              />
-      </UserProvider>
-    </ThemeProvider>
+          <Toaster
+            toastOptions={{
+              className: "",
+              style: {
+                fontSize:'13px'
+              },
+            }}
+            />
+    </UserProvider>
   );
 };
 
