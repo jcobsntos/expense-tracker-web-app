@@ -2,7 +2,7 @@ import {
     LuLayoutDashboard,
     LuHandCoins,
     LuWalletMinimal,
-    LuPieChart,
+    LuCalculator,
     LuUser,
     LuLogOut,
 } from "react-icons/lu";
@@ -29,7 +29,7 @@ export const SIDE_MENU_DATA = [
     {
         id: "04",
         label: "Budget",
-        icon: LuPieChart,
+        icon: LuCalculator,
         path: "/budget"
     },
     {
