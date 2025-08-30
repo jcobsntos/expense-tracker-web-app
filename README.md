@@ -53,7 +53,7 @@ Built by **[@jcobsntos](https://github.com/jcobsntos)**
 - 📱 **Responsive Design** – Works across desktop, tablet, and mobile
 - 🧭 **Intuitive Navigation** – Sidebar access to Dashboard, Income, Expenses, Budget, Profile, and Logout
 - ❌ **Delete with Ease** – Hover over items to reveal a delete button
-- 🌙 **Dark Mode** – Beautiful dark theme with system preference detection
+- 🎨 **Light Theme** – Clean and modern light theme optimized for readability
 - 👤 **Profile Management** – Complete profile settings with image upload/remove
 - 💰 **Budget Tracking** – Set monthly budgets by category and track spending
 - 🎨 **Enhanced Visualizations** – Interactive charts with hover effects and multiple chart types
@@ -105,7 +105,7 @@ Here are some previews of the app in action:
 
 ```mermaid
 flowchart TD
-    User[User] -->|HTTP Requests| A[Frontend - React + Tailwind + Dark Mode]
+    User[User] -->|HTTP Requests| A[Frontend - React + Tailwind + Light Theme]
     A -->|API Calls| B[Backend - Express + Node.js]
     B --> C[MongoDB Database]
     B --> D[Authentication via JWT]
@@ -114,7 +114,7 @@ flowchart TD
     B --> G[Budget Management]
     A --> H[Enhanced Charts - Recharts]
     A --> I[Profile Management]
-    A --> J[Theme Context]
+    A --> J[Responsive Design]
 ```
 
 ---
@@ -200,11 +200,12 @@ Contributions are welcome!
 ## 🛣 Roadmap
 
 ### ✅ Recently Completed
-- [x] **Dark Mode Implementation** – Complete dark theme with system detection
+- [x] **Light Theme Optimization** – Streamlined to a clean, consistent light theme
 - [x] **Profile Management** – Comprehensive profile settings with image management
 - [x] **Budget Tracking** – Monthly budget creation and monitoring by category
 - [x] **Enhanced Data Visualization** – Interactive charts with multiple view options
 - [x] **Improved UX** – Better navigation, animations, and user feedback
+- [x] **Code Cleanup** – Removed dark mode dependencies for better performance
 
 ### 🚀 Upcoming Features
 - [ ] Add recurring expenses feature
