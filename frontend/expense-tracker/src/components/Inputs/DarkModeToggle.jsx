@@ -6,17 +6,26 @@ import { useTheme } from '../../context/themeContext';
 const DarkModeToggle = ({ className = "" }) => {
   const { darkMode, toggleDarkMode } = useTheme();
 
+  const handleToggle = () => {
+    console.log('DarkModeToggle clicked, current mode:', darkMode ? 'dark' : 'light');
+    toggleDarkMode();
+  };
+
   return (
     <motion.button
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
-      onClick={toggleDarkMode}
-      className={`relative flex items-center justify-between w-16 h-8 bg-gray-300 dark:bg-gray-600 rounded-full p-1 transition-colors duration-300 ${className}`}
-      aria-label="Toggle dark mode"
+      onClick={handleToggle}
+      className={`relative flex items-center justify-between w-16 h-8 rounded-full p-1 transition-all duration-300 ${className} ${
+        darkMode ? 'bg-gray-600' : 'bg-gray-300'
+      }`}
+      aria-label={`Toggle to ${darkMode ? 'light' : 'dark'} mode`}
     >
       {/* Background slider */}
       <motion.div
-        className="absolute w-6 h-6 bg-white dark:bg-gray-800 rounded-full shadow-md"
+        className={`absolute w-6 h-6 rounded-full shadow-md ${
+          darkMode ? 'bg-gray-200' : 'bg-white'
+        }`}
         animate={{
           x: darkMode ? 32 : 0,
         }}
