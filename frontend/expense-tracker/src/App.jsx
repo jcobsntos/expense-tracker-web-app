@@ -6,6 +6,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import axios from "axios";
+import { Analytics } from '@vercel/analytics/react';
 
 import Login from "./pages/Auth/Login";
 import SignUp from "./pages/Auth/SignUp";
@@ -43,6 +44,7 @@ const App = () => {
               },
             }}
             />
+        <Analytics />
     </UserProvider>
   );
 };
