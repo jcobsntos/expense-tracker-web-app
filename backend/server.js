@@ -12,6 +12,15 @@ const KeepAliveService = require("./keepAlive");
 
 const app = express();
 
+console.log('🚀 Starting Expense Tracker Backend...');
+console.log('🔍 Environment Variables Check:');
+console.log('- NODE_ENV:', process.env.NODE_ENV || 'not set');
+console.log('- CLIENT_URL:', process.env.CLIENT_URL || 'not set');
+console.log('- CORS_ORIGIN:', process.env.CORS_ORIGIN || 'not set');
+console.log('- MONGO_URI:', process.env.MONGO_URI ? 'set' : 'NOT SET');
+console.log('- JWT_SECRET:', process.env.JWT_SECRET ? 'set' : 'NOT SET');
+console.log('- RENDER_EXTERNAL_URL:', process.env.RENDER_EXTERNAL_URL || 'not set');
+
 // Middleware to handle CORS
 app.use(
     cors({
@@ -23,6 +32,7 @@ app.use(
 
 app.use(express.json());
 
+console.log('🔗 Connecting to MongoDB...');
 // Connect to DB
 connectDB();
 
@@ -66,19 +76,29 @@ app.get("/health", (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
+
+// Initialize keep-alive service for production
+let keepAlive;
+if (process.env.NODE_ENV === 'production' && process.env.RENDER_EXTERNAL_URL) {
+    keepAlive = new KeepAliveService(`${process.env.RENDER_EXTERNAL_URL}/health`);
+    
+    // Add keep-alive status endpoint
+    app.get('/keep-alive/status', (req, res) => {
+        res.json(keepAlive ? keepAlive.getStatus() : { isRunning: false, message: 'Keep-alive service not initialized' });
+    });
+}
+
 const server = app.listen(PORT, () => {
     console.log(`✅ Server is running on port ${PORT}`);
     console.log(`🔗 Health check: http://localhost:${PORT}/ping`);
+    console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
     
-    // Start keep-alive service for production
-    if (process.env.NODE_ENV === 'production' && process.env.RENDER_EXTERNAL_URL) {
-        const keepAlive = new KeepAliveService(`${process.env.RENDER_EXTERNAL_URL}/health`);
-        keepAlive.start();
-        
-        // Add keep-alive status endpoint
-        app.get('/keep-alive/status', (req, res) => {
-            res.json(keepAlive.getStatus());
-        });
+    // Start keep-alive service after server is ready
+    if (keepAlive) {
+        setTimeout(() => {
+            keepAlive.start();
+            console.log(`🔄 Keep-alive service started for ${process.env.RENDER_EXTERNAL_URL}`);
+        }, 5000); // Wait 5 seconds before starting keep-alive
     }
 });
 
