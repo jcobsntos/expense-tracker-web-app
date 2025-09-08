@@ -9,11 +9,8 @@ const connectDB = async () => {
         console.log('🔗 Attempting to connect to MongoDB...');
         
         await mongoose.connect(process.env.MONGO_URI, {
-            serverSelectionTimeoutMS: 10000, // Increased timeout
-            socketTimeoutMS: 45000,
-            maxPoolSize: 10, // Maintain up to 10 socket connections
-            bufferCommands: false, // Disable mongoose buffering
-            bufferMaxEntries: 0 // Fixed typo: was bufferMaxEntries
+            serverSelectionTimeoutMS: 10000, // Increased timeout for connection
+            socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
         });
         
         console.log('✅ MongoDB connected successfully');
